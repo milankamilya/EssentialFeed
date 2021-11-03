@@ -10,7 +10,7 @@ import Foundation
 public typealias CommonCompletionType = (Error?, HTTPURLResponse?) -> Void
 
 public enum HTTPClientResult {
-    case success(HTTPURLResponse)
+    case success(Data, HTTPURLResponse)
     case error(Error)
 }
 
