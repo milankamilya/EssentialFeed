@@ -9,7 +9,7 @@ import Foundation
 
 public typealias CommonCompletionType = (Error?, HTTPURLResponse?) -> Void
 
-public final class RemoteFeedLoader{
+public final class RemoteFeedLoader: FeedLoader {
     private let url: URL
     private let client: HTTPClient
     
