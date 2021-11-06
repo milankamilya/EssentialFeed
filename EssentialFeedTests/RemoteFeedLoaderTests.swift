@@ -38,7 +38,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOnClientError() {
         let (sut, client) = makeSUT()
         
-        expect(sut, toCompeteWithResult: .failure(.connectivity)) {
+        expect(sut, toCompeteWithResult: .failure(RemoteFeedLoader.Error.connectivity)) {
             let clientError = NSError(domain: "Test", code: 0)
             client.complete(with: clientError)
         }
@@ -50,7 +50,7 @@ class RemoteFeedLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         
         samples.enumerated().forEach { index, code in
-            expect(sut, toCompeteWithResult: .failure(.invalidData)) {
+            expect(sut, toCompeteWithResult: .failure(RemoteFeedLoader.Error.invalidData)) {
                 let validateData = makeItemsJSON(items: [])
                 client.complete(withStatusCode: code, data: validateData, at: index)
             }
@@ -60,7 +60,7 @@ class RemoteFeedLoaderTests: XCTestCase {
     func test_load_deliversErrorOn200HTTPResponseWithInvalidJSON() {
         let (sut, client) = makeSUT()
 
-        expect(sut, toCompeteWithResult: .failure(.invalidData)) {
+        expect(sut, toCompeteWithResult: .failure(RemoteFeedLoader.Error.invalidData)) {
             let invalidJSON = Data( "invalid json".utf8)
             client.complete(withStatusCode: 200, data: invalidJSON, at: 0)
         }
@@ -156,8 +156,10 @@ class RemoteFeedLoaderTests: XCTestCase {
             switch (receivedResult, expectedResult) {
             case let (.success(receivedItems), .success(expectedItems)):
                 XCTAssertEqual(receivedItems, expectedItems)
-            case let (.failure(receivedItems), .failure(expectedItems)):
+
+            case let (.failure(receivedItems as RemoteFeedLoader.Error), .failure(expectedItems as RemoteFeedLoader.Error)):
                 XCTAssertEqual(receivedItems, expectedItems)
+
             default:
                 XCTFail("Expected result \(expectedResult) got \(receivedResult) instead", file: file, line: line)
             }
