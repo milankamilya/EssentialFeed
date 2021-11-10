@@ -9,12 +9,12 @@ on:
 jobs:
   build:
     name: Build and test CI scheme using xcodebuild command
-    runs-on: macos-latest
+    runs-on: macos-11.3
 
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Set Default Scheme
+      - name: Set CI Scheme
         run: |
           scheme_list=$(xcodebuild -list -json | tr -d "\n")
           default="CI"
