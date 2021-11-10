@@ -11,22 +11,7 @@ import EssentialFeed
 class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     func test_endToEndTestServerGETFeedResult_matchesFixedTestAccountData() {
-        // "https://essentialdeveloper.com/feed-case-study/test-api/feed"
-        let testServerURL = URL(string: "https://app.fakejson.com/q/FAi3Qh4m?token=LmEqVI9rNIi4le93VGIqvw")!
-        let client = URLSessionHTTPClient()
-        let feedLoader = RemoteFeedLoader(url: testServerURL, client: client)
-        
-        let exp = expectation(description: "Waiting for load completion")
-        var capturedResult: LoadFeedResult?
-        
-        feedLoader.load { result in
-            capturedResult = result
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 5.0)
-        
-        switch capturedResult {
+        switch getFeedResult() {
         case let .success(items)?:
             XCTAssertEqual(items.count, 8, "Expected 8 items in the test account feed")
             XCTAssertEqual(items[0], expectedItem(at: 0))
@@ -49,6 +34,25 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
     
     
     // MARK: - Helpers
+    
+    func getFeedResult() -> LoadFeedResult? {
+        
+        // "https://essentialdeveloper.com/feed-case-study/test-api/feed"
+        let testServerURL = URL(string: "https://app.fakejson.com/q/FAi3Qh4m?token=LmEqVI9rNIi4le93VGIqvw")!
+        let client = URLSessionHTTPClient()
+        let feedLoader = RemoteFeedLoader(url: testServerURL, client: client)
+        
+        let exp = expectation(description: "Waiting for load completion")
+        var capturedResult: LoadFeedResult?
+        
+        feedLoader.load { result in
+            capturedResult = result
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 5.0)
+        return capturedResult
+    }
     
     func expectedItem(at index: Int) -> FeedItem {
         return FeedItem(
