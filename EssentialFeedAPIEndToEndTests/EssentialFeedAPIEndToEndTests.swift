@@ -39,7 +39,7 @@ class EssentialFeedAPIEndToEndTests: XCTestCase {
         
         // "https://essentialdeveloper.com/feed-case-study/test-api/feed"
         let testServerURL = URL(string: "https://app.fakejson.com/q/FAi3Qh4m?token=LmEqVI9rNIi4le93VGIqvw")!
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let feedLoader = RemoteFeedLoader(url: testServerURL, client: client)
         trackForMemoryLeaks(client, file: file, line: line)
         trackForMemoryLeaks(feedLoader, file: file, line: line)
