@@ -57,4 +57,7 @@ class FeedStoreSpy: FeedStore {
         retrivalCompletions[index](error)
     }
     
+    func completionWithEmptyCache(at index: Int = 0) {
+        retrivalCompletions[index](nil)
+    }
 }
