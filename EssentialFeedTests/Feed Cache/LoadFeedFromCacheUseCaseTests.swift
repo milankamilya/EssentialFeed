@@ -98,11 +98,11 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
     func test_load_doesNotDeleteCacheOnLessThanSevenDaysOldCache() {
         let feed = uniqueImageFeed()
         let fixedCurrentDate = Date.init()
-        let lessSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: 1)
+        let lessThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: 1)
         let (sut, store) = makeSUT { return fixedCurrentDate }
         
         sut.load() { _ in }
-        store.completionRetrival(with: feed.local, timestamp: lessSevenDaysOldTimestamp)
+        store.completionRetrival(with: feed.local, timestamp: lessThanSevenDaysOldTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve])
     }
@@ -111,11 +111,23 @@ class LoadFeedFromCacheUseCaseTests: XCTestCase {
     func test_load_deleteCacheOnSevenDaysOldCache() {
         let feed = uniqueImageFeed()
         let fixedCurrentDate = Date.init()
-        let lessSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7)
+        let sevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7)
         let (sut, store) = makeSUT { return fixedCurrentDate }
         
         sut.load() { _ in }
-        store.completionRetrival(with: feed.local, timestamp: lessSevenDaysOldTimestamp)
+        store.completionRetrival(with: feed.local, timestamp: sevenDaysOldTimestamp)
+        
+        XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
+    }
+    
+    func test_load_deleteCacheOnMoreThanSevenDaysOldCache() {
+        let feed = uniqueImageFeed()
+        let fixedCurrentDate = Date.init()
+        let moreThanSevenDaysOldTimestamp = fixedCurrentDate.adding(days: -7).adding(seconds: -1)
+        let (sut, store) = makeSUT { return fixedCurrentDate }
+        
+        sut.load() { _ in }
+        store.completionRetrival(with: feed.local, timestamp: moreThanSevenDaysOldTimestamp)
         
         XCTAssertEqual(store.receivedMessages, [.retrieve, .deleteCachedFeed])
     }
