@@ -10,10 +10,7 @@ import Foundation
 public class LocalFeedLoader {
     let store: FeedStore
     let currentDate: () -> Date
-    
-    public typealias SavedResults = Error?
-    public typealias LoadResults = LoadFeedResult
-    
+        
     public init(store: FeedStore, currentDate: @escaping () -> Date) {
         self.store = store
         self.currentDate = currentDate
@@ -35,6 +32,7 @@ public class LocalFeedLoader {
 }
 
 extension LocalFeedLoader {
+    public typealias SavedResults = Error?
 
     public func save(feed: [FeedImage], completion: @escaping (SavedResults) -> Void) {
         store.deleteCachedFeed { [weak self](error) in
@@ -58,7 +56,8 @@ extension LocalFeedLoader {
 }
 
 extension LocalFeedLoader: FeedLoader {
-    
+    public typealias LoadResults = LoadFeedResult
+
     public func load(completion: @escaping (LoadResults) -> Void) {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
