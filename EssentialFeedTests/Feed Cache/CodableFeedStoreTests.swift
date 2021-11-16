@@ -80,70 +80,40 @@ class CodableFeedStoreTests: XCTestCase {
     
     func test_retrieve_hasNoSideOnEmptyCache() {
         let sut = makeSUT()
-        let exp = expectation(description: "Waiting for completion")
         
-        sut.retrieve { firstResult in
-            sut.retrieve { secondResult in
-                switch (firstResult, secondResult) {
-                case (.empty, .empty):
-                    break
-                default:
-                    XCTFail("Expected retriving twice from empty cache to deliver same empty result, got \(firstResult) and \(secondResult) instead.")
-                }
-                exp.fulfill()
-            }
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-        
+        expect(sut, toRetrieveTwice: .empty)
     }
     
     func test_retrieveAfterInsertingToEmptyCache_deliversInsertedValues() {
         
-        let insertedFeed = uniqueImageFeed().local
-        let insertedTimestamp = Date()
+        let feed = uniqueImageFeed().local
+        let timestamp = Date()
         let sut = makeSUT()
         
         let exp = expectation(description: "Waiting for completion")
-        sut.insert(feed: insertedFeed, timestamp: insertedTimestamp) { insertionError in
+        sut.insert(feed: feed, timestamp: timestamp) { insertionError in
             XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
         
-        expect(sut, toRetrieve: .found(feed: insertedFeed, timestamp: insertedTimestamp))
+        expect(sut, toRetrieve: .found(feed: feed, timestamp: timestamp))
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
         
-        let insertedFeed = uniqueImageFeed().local
-        let insertedTimestamp = Date()
+        let feed = uniqueImageFeed().local
+        let timestamp = Date()
         let sut = makeSUT()
         
         let exp = expectation(description: "Waiting for completion")
-        
-        sut.insert(feed: insertedFeed, timestamp: insertedTimestamp) { insertionError in
+        sut.insert(feed: feed, timestamp: timestamp) { insertionError in
             XCTAssertNil(insertionError, "Expected feed to be inserted successfully")
-            sut.retrieve { firstResult in
-                sut.retrieve { secondResult in
-                    switch (firstResult, secondResult) {
-                    case let (.found(firstFound), .found(secondFound)):
-                        XCTAssertEqual(firstFound.feed, insertedFeed)
-                        XCTAssertEqual(firstFound.timestamp, insertedTimestamp)
-                        
-                        XCTAssertEqual(secondFound.feed, insertedFeed)
-                        XCTAssertEqual(secondFound.timestamp, insertedTimestamp)
-                        break
-                    default:
-                        XCTFail("Expecting retrieval twice from non-empty cache to deliver same found result with feed \(insertedFeed) and \(insertedTimestamp) twice, got \(firstResult) and \(secondResult) instead..")
-                    }
-                    exp.fulfill()
-                }
-            }
+            exp.fulfill()
         }
-        
         wait(for: [exp], timeout: 1.0)
         
+        expect(sut, toRetrieveTwice: .found(feed: feed, timestamp: timestamp))
     }
     
     // MARK: - Helpers
@@ -152,6 +122,11 @@ class CodableFeedStoreTests: XCTestCase {
         let store = CodableFeedStore(storeURL: testSpecificStoreURL())
         trackForMemoryLeaks(store)
         return store
+    }
+    
+    private func expect(_ sut:CodableFeedStore, toRetrieveTwice expectedResult: RetrieveCacheFeedResult, file: StaticString = #filePath, line: UInt = #line) {
+        expect(sut, toRetrieve: expectedResult, file: file, line: line)
+        expect(sut, toRetrieve: expectedResult, file: file, line: line)
     }
     
     private func expect(_ sut: CodableFeedStore, toRetrieve expectedResult: RetrieveCacheFeedResult, file: StaticString = #filePath, line: UInt = #line) {
