@@ -16,6 +16,12 @@ private class ManagedCache: NSManagedObject {
     var localFeed: [LocalFeedImage] {
         return feed.compactMap { ($0 as? ManagedFeedImage)?.local }
     }
+    
+    static func find(in context: NSManagedObjectContext) throws -> ManagedCache? {
+        let request = NSFetchRequest<ManagedCache>(entityName: entity().name!)
+        request.returnsObjectsAsFaults = false
+        return try context.fetch(request).first
+    }
 }
 
 @objc(ManagedFeedImage)
@@ -31,15 +37,16 @@ private class ManagedFeedImage: NSManagedObject {
     }
     
     static func images(from localFeed: [LocalFeedImage], in context: NSManagedObjectContext) -> NSOrderedSet {
-             return NSOrderedSet(array: localFeed.map { local in
-                 let managed = ManagedFeedImage(context: context)
-                 managed.id = local.id
-                 managed.imageDescription = local.description
-                 managed.location = local.location
-                 managed.url = local.url
-                 return managed
-             })
-         }
+        return NSOrderedSet(array: localFeed.map { local in
+            let managed = ManagedFeedImage(context: context)
+            managed.id = local.id
+            managed.imageDescription = local.description
+            managed.location = local.location
+            managed.url = local.url
+            return managed
+        })
+    }
+    
 }
 
 public final class CoreDataFeedStore: FeedStore {
@@ -59,9 +66,7 @@ public final class CoreDataFeedStore: FeedStore {
         let context = self.context
         context.perform {
             do {
-                let request = NSFetchRequest<ManagedCache>(entityName: ManagedCache.entity().name!)
-                request.returnsObjectsAsFaults = false
-                if let cache = try context.fetch(request).first {
+                if let cache = try ManagedCache.find(in: context) {
                     completion(.found(feed: cache.localFeed, timestamp: cache.timestamp))
                 } else {
                     completion(.empty)
