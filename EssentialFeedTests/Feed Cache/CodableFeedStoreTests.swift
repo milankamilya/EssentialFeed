@@ -97,84 +97,45 @@ class CodableFeedStoreTests: XCTestCase, FailableFeedStore {
     func test_delete_deliversNoErrorOnEmptyCache() {
         let sut = makeSUT()
         
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(deletionError, "Expected deletion not to return any error")
+        assertThatDeleteDeliversNoErrorOnEmptyCache(on: sut)
     }
     
     func test_delete_hasNoEffectOnEmptyCache() {
         let sut = makeSUT()
         
-        deleteCache(from: sut)
-        
-        expect(sut, toRetrieve: .empty)
+        assertThatDeleteHasNoEffectOnEmptyCache(on: sut)
     }
     
     func test_delete_deliversNoErrorOnNonEmptyCache() {
-        let feed = uniqueImageFeed().local
-        let timestamp = Date()
         let sut = makeSUT()
         
-        insert(cache: (feed, timestamp), to: sut)
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNil(deletionError, "Expected to delete cache successfully")
+        assertThatDeleteDeliversNoErrorOnNonEmptyCache(on: sut)
     }
     
     func test_delete_leavesEmptyCacheOnNonEmptyCache() {
-        let feed = uniqueImageFeed().local
-        let timestamp = Date()
         let sut = makeSUT()
-        
-        insert(cache: (feed, timestamp), to: sut)
-        deleteCache(from: sut)
-        
-        expect(sut, toRetrieve: .empty)
+
+        assertThatDeleteLeavesEmptyCacheOnNonEmptyCache(on: sut)
     }
     
     func test_delete_deliverErrorOnDeletionError() {
         let storeURL = cachesDirectory()
         let sut = makeSUT(storeURL: storeURL)
         
-        let deletionError = deleteCache(from: sut)
-        
-        XCTAssertNotNil(deletionError, "Expected cache deletion to fail")
+        assertThatDeleteDeliverErrorOnDeletionError(on: sut)
     }
     
     func test_delete_hasNoSideEffectsOnDeletionError() {
         let storeURL = cachesDirectory()
         let sut = makeSUT(storeURL: storeURL)
         
-        deleteCache(from: sut)
-        
-        expect(sut, toRetrieve: .empty)
+        assertThatDeleteHasNoSideEffectsOnDeletionError(on: sut)
     }
     
     func test_storeSideEffects_runSerially() {
         let sut = makeSUT()
-        var completedOperationInOrder = [XCTestExpectation]()
         
-        let op1 = expectation(description: "Operation 1")
-        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
-            completedOperationInOrder.append(op1)
-            op1.fulfill()
-        }
-        
-        let op2 = expectation(description: "Operation 2")
-        sut.deleteCachedFeed { _ in
-            completedOperationInOrder.append(op2)
-            op2.fulfill()
-        }
-        
-        let op3 = expectation(description: "Operation 3")
-        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
-            completedOperationInOrder.append(op3)
-            op3.fulfill()
-        }
-        
-        waitForExpectations(timeout: 5.0)
-        
-        XCTAssertEqual(completedOperationInOrder, [op1, op2, op3], "Expected side effects to finished in serially, but operations finishes in wrong order")
+        assertThatStoreSideEffectsRunSerially(on: sut)
     }
     
     // MARK: - Helpers

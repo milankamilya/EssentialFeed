@@ -60,6 +60,61 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         expect(sut, toRetrieve: .found(feed: latestFeed, timestamp: latestTimestamp), file: file, line: line)
     }
+    
+    func assertThatDeleteDeliversNoErrorOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expected deletion not to return any error", file: file, line: line)
+    }
+    
+    func assertThatDeleteHasNoEffectOnEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        deleteCache(from: sut)
+        
+        expect(sut, toRetrieve: .empty, file: file, line: line)
+    }
+
+    func assertThatDeleteDeliversNoErrorOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        insert(cache: (uniqueImageFeed().local, Date()), to: sut)
+        let deletionError = deleteCache(from: sut)
+        
+        XCTAssertNil(deletionError, "Expected to delete cache successfully", file: file, line: line)
+    }
+    
+    func assertThatDeleteLeavesEmptyCacheOnNonEmptyCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        
+        insert(cache: (uniqueImageFeed().local, Date()), to: sut)
+        deleteCache(from: sut)
+        
+        expect(sut, toRetrieve: .empty, file: file, line: line)
+    }
+    
+    func assertThatStoreSideEffectsRunSerially(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        
+        var completedOperationInOrder = [XCTestExpectation]()
+        
+        let op1 = expectation(description: "Operation 1")
+        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
+            completedOperationInOrder.append(op1)
+            op1.fulfill()
+        }
+        
+        let op2 = expectation(description: "Operation 2")
+        sut.deleteCachedFeed { _ in
+            completedOperationInOrder.append(op2)
+            op2.fulfill()
+        }
+        
+        let op3 = expectation(description: "Operation 3")
+        sut.insert(feed: uniqueImageFeed().local, timestamp: Date()) { _ in
+            completedOperationInOrder.append(op3)
+            op3.fulfill()
+        }
+        
+        waitForExpectations(timeout: 5.0)
+        
+        XCTAssertEqual(completedOperationInOrder, [op1, op2, op3], "Expected side effects to finished in serially, but operations finishes in wrong order", file: file, line: line)
+    }
+    
 }
 
 
