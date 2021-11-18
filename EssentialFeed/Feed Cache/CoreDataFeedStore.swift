@@ -25,9 +25,11 @@ private class ManagedImageFeed: NSManagedObject {
 
 public final class CoreDataFeedStore: FeedStore {
     private let persistanceContainer: NSPersistentContainer
+    private let context: NSManagedObjectContext
     
     init(bundle: Bundle = .main) throws {
         persistanceContainer = try NSPersistentContainer.load(modelName: "FeedStore", in: bundle)
+        context = persistanceContainer.newBackgroundContext()
     }
     
     public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
