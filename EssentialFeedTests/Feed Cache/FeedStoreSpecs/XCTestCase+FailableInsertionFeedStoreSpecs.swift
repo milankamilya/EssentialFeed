@@ -2,19 +2,23 @@
 //  XCTestCase+FailableInsertionFeedStoreSpecs.swift
 //  EssentialFeedTests
 //
-//  Created by MK on 17/11/21.
+//  Created by MK on 18/11/21.
 //
 
 import Foundation
 import XCTest
 import EssentialFeed
 
-extension FailableRetrieveFeedStoreSpecs where Self: XCTestCase {
-    func assertThatRetrieveDeliversErrorOnInvalidCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
-        expect(sut, toRetrieve: .failure(error: anyNSError()), file: file, line: line)
+extension FailableInsertionFeedStoreSpecs where Self: XCTestCase {
+    func assertThatInsertDeliversErrorOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        let insertionError = insert(cache: (uniqueImageFeed().local, Date()), to: sut)
+        
+        XCTAssertNotNil(insertionError, "Expected insertion to fail for invalid store url", file: file, line: line)
     }
     
-    func assertThatRetrieveHasNoSideEffectOnInvalidCache(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {        
-        expect(sut, toRetrieveTwice: .failure(error: anyNSError()), file: file, line: line)
+    func assertThatInsertHasNoSideEffectsOnInsertionError(on sut: FeedStore, file: StaticString = #filePath, line: UInt = #line) {
+        insert(cache: (uniqueImageFeed().local, Date()), to: sut)
+        
+        expect(sut, toRetrieve: .empty, file: file, line: line)
     }
 }
