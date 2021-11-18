@@ -11,13 +11,13 @@ import XCTest
 class CoreDataFeedStoreTests: XCTestCase, FailableFeedStore {
     
     func test_retrieve_deliversEmptyOnEmptyCache() {
-        let sut = CoreDataFeedStore()
+        let sut = makeSUT()
         
         assertThatRetrieveDeliversEmptyOnEmptyCache(on: sut)
     }
     
     func test_retrieve_hasNoSideEffectOnEmptyCache() {
-        let sut = CoreDataFeedStore()
+        let sut = makeSUT()
         
         assertThatRetrieveHasNoSideEffectOnEmptyCache(on: sut)
     }
@@ -86,4 +86,12 @@ class CoreDataFeedStoreTests: XCTestCase, FailableFeedStore {
         
     }
     
+    // MARK: - Helpers
+    
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> CoreDataFeedStore {
+        let storeBundle = Bundle(for: CoreDataFeedStore.self)
+        let sut = try! CoreDataFeedStore(bundle: storeBundle)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
+    }
 }
