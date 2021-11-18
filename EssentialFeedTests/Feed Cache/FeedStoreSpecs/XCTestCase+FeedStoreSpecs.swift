@@ -60,6 +60,10 @@ extension FeedStoreSpecs where Self: XCTestCase {
         
         expect(sut, toRetrieve: .found(feed: latestFeed, timestamp: latestTimestamp), file: file, line: line)
     }
+}
+
+
+extension FeedStoreSpecs where Self: XCTestCase {
     
     func expect(_ sut: FeedStore, toRetrieveTwice expectedResult: RetrieveCacheFeedResult, file: StaticString = #filePath, line: UInt = #line) {
         expect(sut, toRetrieve: expectedResult, file: file, line: line)
