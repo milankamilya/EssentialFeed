@@ -29,7 +29,9 @@ class CoreDataFeedStoreTests: XCTestCase, FailableFeedStore {
     }
     
     func test_retrieve_hasNoSideEffectsOnNonEmptyCache() {
+        let sut = makeSUT()
         
+        assertThatRetrieveHasNoSideEffectOnEmptyCache(on: sut)
     }
     
     func test_retrieve_deliversErrorOnInvalidCache() {
