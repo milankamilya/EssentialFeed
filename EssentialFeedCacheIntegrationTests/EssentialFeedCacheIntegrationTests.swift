@@ -7,9 +7,22 @@
 
 import XCTest
 @testable import EssentialFeed
+@testable import EssentialFeedTests
 
 class EssentialFeedCacheIntegrationTests: XCTestCase {
 
+    override func setUp() {
+        super.setUp()
+        
+        setupEmptyStoreState()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        undoStoreSideEffects()
+    }
+    
     func test_load_deliversNoItemsOnEmptyImages() {
         let sut = makeSUT()
         
@@ -48,4 +61,16 @@ class EssentialFeedCacheIntegrationTests: XCTestCase {
         return FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first!
     }
     
+    private func setupEmptyStoreState() {
+        deleteStoreArtifacts()
+    }
+    
+    private func undoStoreSideEffects() {
+        deleteStoreArtifacts()
+    }
+    
+    private func deleteStoreArtifacts() {
+        try? FileManager.default.removeItem(at: testSpecificStoreURL())
+    }
+
 }
