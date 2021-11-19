@@ -48,6 +48,8 @@
 		4DDCD8AB274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDCD8AA274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift */; };
 		4DDCD8AC274725A8001C124E /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9BDBF3272F9839006D6EC7 /* EssentialFeed.framework */; };
 		4DDCD8B227472988001C124E /* XCTTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA124FA2738E2570024ECCF /* XCTTestCase+MemoryLeakTracking.swift */; };
+		4DDCD8B327472E2D001C124E /* FeedCacheTestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA078842741EB690087273A /* FeedCacheTestHelper.swift */; };
+		4DDCD8B427472E38001C124E /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA078862741EC3E0087273A /* SharedTestHelpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -547,6 +549,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDCD8B427472E38001C124E /* SharedTestHelpers.swift in Sources */,
+				4DDCD8B327472E2D001C124E /* FeedCacheTestHelper.swift in Sources */,
 				4DDCD8B227472988001C124E /* XCTTestCase+MemoryLeakTracking.swift in Sources */,
 				4DDCD8AB274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift in Sources */,
 			);
