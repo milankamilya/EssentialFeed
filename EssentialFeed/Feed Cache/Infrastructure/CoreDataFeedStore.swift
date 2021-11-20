@@ -17,43 +17,33 @@ public final class CoreDataFeedStore: FeedStore {
         context = persistanceContainer.newBackgroundContext()
     }
     
-    public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-        perform { context in
-            do {
-                try ManagedCache.find(in: context).map(context.delete)
-                completion(.success(()))
-            } catch let error {
-                completion(.failure(error))
-            }
-        }
-    }
-    
     public func retrieve(completion: @escaping RetrivalCompletion) {
         perform { context in
-            do {
-                if let cache = try ManagedCache.find(in: context) {
-                    completion(.success(.some(CacheResult(cache.localFeed, cache.timestamp))))
-                } else {
-                    completion(.success(.none))
+            completion( Result(catching: {
+                try ManagedCache.find(in: context).map {
+                    return CacheResult($0.localFeed, $0.timestamp)
                 }
-            } catch let error {
-                completion(.failure(error))
-            }
+            }))
         }
     }
     
     public func insert(feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
         perform { context in
-            do {
+            completion( Result(catching: {
                 let managedCache = try ManagedCache.newUniqueInstance(in: context)
                 managedCache.timestamp = timestamp
                 managedCache.feed = ManagedFeedImage.images(from: feed, in: context)
 
                 try context.save()
-                completion(.success(()))
-            } catch let error {
-                completion(.failure(error))
-            }
+            }))
+        }
+    }
+    
+    public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
+        perform { context in
+            completion( Result(catching: {
+                try ManagedCache.find(in: context).map(context.delete)
+            }))
         }
     }
     
