@@ -135,9 +135,7 @@ class LoadFeedFromRemoteUseCaseTests: XCTestCase {
             "description": item.description,
             "location": item.location,
             "image": item.url.absoluteString
-        ].reduce(into: [String: Any]()) { acc, elem  in
-            if let value = elem.value { acc[elem.key] = value }
-        }
+        ].compactMapValues { $0 }
         
         return (item, json)
     }
