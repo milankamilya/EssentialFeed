@@ -9,17 +9,6 @@ import Foundation
 import EssentialFeed
 import UIKit
 
-struct FeedImageViewModel<Image> {
-    let image: Image?
-    let description: String?
-    let location: String?
-    let isLoading: Bool
-    let shouldRetry: Bool
-    
-    var hasLocation: Bool {
-        return location != nil
-    }
-}
 
 protocol FeedImageView {
     associatedtype Image
