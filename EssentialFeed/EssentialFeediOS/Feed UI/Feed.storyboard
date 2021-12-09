@@ -79,6 +79,9 @@ Location</string>
                                                             <state key="normal" title="⟳">
                                                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             </state>
+                                                            <connections>
+                                                                <action selector="retryButtonTapped" destination="MGU-Vg-kdl" eventType="touchUpInside" id="Khi-NC-30W"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <color key="backgroundColor" red="0.89019607840000003" green="0.89019607840000003" blue="0.89019607840000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -120,6 +123,14 @@ Location</string>
                                         <constraint firstItem="8fM-Na-kLU" firstAttribute="leading" secondItem="kuh-0z-sJl" secondAttribute="leadingMargin" id="tuh-Px-okh"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="aYM-Yn-7pM" id="wJq-0B-kWd"/>
+                                    <outlet property="feedImageContainer" destination="z9f-Be-QKI" id="ktG-Fe-KDS"/>
+                                    <outlet property="feedImageRetryButton" destination="pbh-3a-NAW" id="cky-4a-BkK"/>
+                                    <outlet property="feedImageView" destination="UfO-Cw-ytu" id="XnE-Uf-4Pv"/>
+                                    <outlet property="locationContainer" destination="Amt-Ms-xI5" id="Ysb-fE-1WG"/>
+                                    <outlet property="locationLabel" destination="1au-aU-xZP" id="zrX-AE-SIY"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
