@@ -18,11 +18,10 @@ final public class FeedUIComposer {
         let bundle = Bundle(for: FeedViewController.self)
         let storyboard = UIStoryboard(name: "Feed", bundle: bundle)
         let feedController = storyboard.instantiateInitialViewController() as! FeedViewController
-        
-        feedController.refreshController?.delegate = presentationAdapter
+        feedController.delegate = presentationAdapter
         
         let presenter = FeedPresenter(
-            loadingView: WeakRefVirtualProxy(feedController.refreshController!),
+            loadingView: WeakRefVirtualProxy(feedController),
             feedView: FeedViewAdapter(controller: feedController, imageLoader: imageLoader))
         
         presentationAdapter.presenter = presenter
@@ -110,7 +109,7 @@ extension WeakRefVirtualProxy: FeedImageView where T: FeedImageView, T.Image == 
     }
 }
 
-private final class FeedLoaderPresentationAdapter: FeedRefreshViewControllerDelegate {
+private final class FeedLoaderPresentationAdapter: FeedViewControllerDelegate {
     let loader: FeedLoader
     var presenter: FeedPresenter?
     
