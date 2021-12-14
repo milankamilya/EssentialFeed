@@ -127,6 +127,7 @@
 		4D846D89276832F90015052C /* UIControl+TestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIControl+TestHelpers.swift"; sourceTree = "<group>"; };
 		4D846D8C276834E90015052C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
 		4D846D8E2768353E0015052C /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Feed.strings"; sourceTree = "<group>"; };
+		4D846D8F2768358C0015052C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = el; path = el.lproj/Feed.strings; sourceTree = "<group>"; };
 		4D9BDBF3272F9839006D6EC7 /* EssentialFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D9BDBF6272F9839006D6EC7 /* EssentialFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EssentialFeed.h; sourceTree = "<group>"; };
 		4D9BDBF7272F9839006D6EC7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -686,6 +687,7 @@
 				en,
 				Base,
 				"pt-BR",
+				el,
 			);
 			mainGroup = 4D9BDBE9272F9839006D6EC7;
 			productRefGroup = 4D9BDBF4272F9839006D6EC7 /* Products */;
@@ -885,6 +887,7 @@
 			children = (
 				4D846D8C276834E90015052C /* en */,
 				4D846D8E2768353E0015052C /* pt-BR */,
+				4D846D8F2768358C0015052C /* el */,
 			);
 			name = Feed.strings;
 			sourceTree = "<group>";
