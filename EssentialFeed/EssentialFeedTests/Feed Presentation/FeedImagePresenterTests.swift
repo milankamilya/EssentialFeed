@@ -56,7 +56,7 @@ final class FeedImagePresenterTests: XCTestCase {
     func test_didStartLoadingImageData_displayTextAndStartLoading() {
         let (sut, view) = makeSUT()
         let feedImage = uniqueImage()
-        let expectedFeedImageViewModel = FeedImageViewModel<ViewSpy.Image>(image: nil, description: feedImage.description, location: feedImage.location, isLoading: true, shouldRetry: false)
+        let expectedFeedImageViewModel = getInitialViewModel(for: feedImage)
         
         sut.didStartLoadingImageData(model: feedImage)
         
@@ -70,6 +70,10 @@ final class FeedImagePresenterTests: XCTestCase {
         trackForMemoryLeaks(view)
         trackForMemoryLeaks(sut)
         return (sut, view)
+    }
+    
+    private func getInitialViewModel(for feedImage: FeedImage) -> FeedImageViewModel<ViewSpy.Image> {
+        return FeedImageViewModel<ViewSpy.Image>(image: nil, description: feedImage.description, location: feedImage.location, isLoading: true, shouldRetry: false)
     }
     
     private class ImageStub : Equatable {
