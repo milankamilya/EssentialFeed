@@ -48,15 +48,13 @@ private final class FeedImagePresenter<View: FeedImageView, Image> where View.Im
 
 final class FeedImagePresenterTests: XCTestCase {
     func test_init_doesNotSendAnyMessage() {
-        let view = ViewSpy()
-        _ = FeedImagePresenter(view: view)
+        let (_, view) = makeSUT()
         
         XCTAssertTrue(view.messages.isEmpty, "Expected init doesn't send any message, but sent \(view.messages) instead")
     }
     
     func test_didStartLoadingImageData_displayTextAndStartLoading() {
-        let view = ViewSpy()
-        let sut = FeedImagePresenter(view: view)
+        let (sut, view) = makeSUT()
         let feedImage = uniqueImage()
         let expectedFeedImageViewModel = FeedImageViewModel<ViewSpy.Image>(image: nil, description: feedImage.description, location: feedImage.location, isLoading: true, shouldRetry: false)
         
@@ -66,6 +64,14 @@ final class FeedImagePresenterTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImagePresenter<ViewSpy, ImageStub>, view: ViewSpy) {
+        let view = ViewSpy()
+        let sut = FeedImagePresenter(view: view)
+        trackForMemoryLeaks(view)
+        trackForMemoryLeaks(sut)
+        return (sut, view)
+    }
+    
     private class ImageStub : Equatable {
         static func == (lhs: FeedImagePresenterTests.ImageStub, rhs: FeedImagePresenterTests.ImageStub) -> Bool {
             return true
