@@ -105,6 +105,18 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertEqual(view.messages, [.display(expectedFeedImageViewModel)])
     }
     
+    func test_didFinishLoadinImageData_displayRetryandStopLoading() {
+        let feedImage = uniqueImage()
+        let image = ImageStub()
+        let error = anyNSError()
+        let (sut, view) = makeSUT(with: { _ in image })
+        let expectedFeedImageViewModel = getFinishImageLoadingViewModel(with: error, model: feedImage)
+        
+        sut.didFinishLoadingImageData(with: error, model: feedImage)
+        
+        XCTAssertEqual(view.messages, [.display(expectedFeedImageViewModel)])
+    }
+    
     // MARK: - Helpers
     private func makeSUT(with imageTransformer: @escaping (Data) -> FeedImagePresenterTests.ViewSpy.Image?, file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImagePresenter<ViewSpy, ImageStub>, view: ViewSpy) {
         let view = ViewSpy()
@@ -120,6 +132,10 @@ final class FeedImagePresenterTests: XCTestCase {
     
     private func getFinishImageLoadingViewModel(for feedImage: FeedImage, with image: ImageStub) -> FeedImageViewModel<ViewSpy.Image> {
         return FeedImageViewModel<ViewSpy.Image>(image: image, description: feedImage.description, location: feedImage.location, isLoading: false, shouldRetry: false)
+    }
+    
+    private func getFinishImageLoadingViewModel(with error: Error, model: FeedImage) -> FeedImageViewModel<ViewSpy.Image> {
+        return FeedImageViewModel<ViewSpy.Image>(image: nil, description: model.description, location: model.location, isLoading: false, shouldRetry: true)
     }
     
     private class ImageStub : Equatable {
