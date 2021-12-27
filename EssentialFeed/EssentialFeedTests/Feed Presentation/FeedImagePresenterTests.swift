@@ -9,7 +9,6 @@ import Foundation
 import XCTest
 @testable import EssentialFeed
 
-
 struct FeedImageViewModel<Image> {
     let image: Image?
     let description: String?
@@ -29,10 +28,14 @@ protocol FeedImageView {
 }
 
 private final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
+    typealias ImageTransformer = (Data) -> Image?
+    
+    private let imageTransformer: ImageTransformer
     private let view: View
     
-    init(view: View) {
+    init(view: View, imageTransformer: @escaping ImageTransformer) {
         self.view = view
+        self.imageTransformer = imageTransformer
     }
     
     func didStartLoadingImageData(model: FeedImage) {
@@ -44,17 +47,43 @@ private final class FeedImagePresenter<View: FeedImageView, Image> where View.Im
             shouldRetry: false
         ))
     }
+    
+    private struct InvalidImageDataError: Error { }
+    
+    func didFinishLoadingImageData(with data: Data, model: FeedImage) {
+        guard let image = imageTransformer(data) else {
+            return didFinishLoadingImageData(with: InvalidImageDataError(), model: model)
+        }
+        
+        view.display(FeedImageViewModel<Image>(
+            image: image,
+            description: model.description,
+            location: model.location,
+            isLoading: false,
+            shouldRetry: false
+        ))
+    }
+    
+    func didFinishLoadingImageData(with error: Error, model: FeedImage) {
+        view.display(FeedImageViewModel<Image>(
+            image: nil,
+            description: model.description,
+            location: model.location,
+            isLoading: false,
+            shouldRetry: true
+        ))
+    }
 }
 
 final class FeedImagePresenterTests: XCTestCase {
     func test_init_doesNotSendAnyMessage() {
-        let (_, view) = makeSUT()
+        let (_, view) = makeSUT(with: { _ in ImageStub() })
         
         XCTAssertTrue(view.messages.isEmpty, "Expected init doesn't send any message, but sent \(view.messages) instead")
     }
     
     func test_didStartLoadingImageData_displayTextAndStartLoading() {
-        let (sut, view) = makeSUT()
+        let (sut, view) = makeSUT(with: { _ in ImageStub() })
         let feedImage = uniqueImage()
         let expectedFeedImageViewModel = getInitialViewModel(for: feedImage)
         
@@ -63,10 +92,23 @@ final class FeedImagePresenterTests: XCTestCase {
         XCTAssertEqual(view.messages, [.display(expectedFeedImageViewModel)])
     }
     
+    func test_didFinishLoadinImageData_displayImageAndStopLoading() {
+        
+        let feedImage = uniqueImage()
+        let image = ImageStub()
+        let (sut, view) = makeSUT(with: { _ in image })
+        let expectedFeedImageViewModel = getFinishImageLoadingViewModel(for: feedImage, with: image)
+        let imageData = Data()
+        
+        sut.didFinishLoadingImageData(with: imageData, model: feedImage)
+        
+        XCTAssertEqual(view.messages, [.display(expectedFeedImageViewModel)])
+    }
+    
     // MARK: - Helpers
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImagePresenter<ViewSpy, ImageStub>, view: ViewSpy) {
+    private func makeSUT(with imageTransformer: @escaping (Data) -> FeedImagePresenterTests.ViewSpy.Image?, file: StaticString = #filePath, line: UInt = #line) -> (sut: FeedImagePresenter<ViewSpy, ImageStub>, view: ViewSpy) {
         let view = ViewSpy()
-        let sut = FeedImagePresenter(view: view)
+        let sut = FeedImagePresenter(view: view, imageTransformer: imageTransformer)
         trackForMemoryLeaks(view)
         trackForMemoryLeaks(sut)
         return (sut, view)
@@ -74,6 +116,10 @@ final class FeedImagePresenterTests: XCTestCase {
     
     private func getInitialViewModel(for feedImage: FeedImage) -> FeedImageViewModel<ViewSpy.Image> {
         return FeedImageViewModel<ViewSpy.Image>(image: nil, description: feedImage.description, location: feedImage.location, isLoading: true, shouldRetry: false)
+    }
+    
+    private func getFinishImageLoadingViewModel(for feedImage: FeedImage, with image: ImageStub) -> FeedImageViewModel<ViewSpy.Image> {
+        return FeedImageViewModel<ViewSpy.Image>(image: image, description: feedImage.description, location: feedImage.location, isLoading: false, shouldRetry: false)
     }
     
     private class ImageStub : Equatable {
