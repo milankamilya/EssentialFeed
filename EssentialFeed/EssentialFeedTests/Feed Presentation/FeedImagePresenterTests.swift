@@ -98,9 +98,8 @@ final class FeedImagePresenterTests: XCTestCase {
         let image = ImageStub()
         let (sut, view) = makeSUT(with: { _ in image })
         let expectedFeedImageViewModel = getFinishImageLoadingViewModel(for: feedImage, with: image)
-        let imageData = Data()
         
-        sut.didFinishLoadingImageData(with: imageData, model: feedImage)
+        sut.didFinishLoadingImageData(with: Data(), model: feedImage)
         
         XCTAssertEqual(view.messages, [.display(expectedFeedImageViewModel)])
     }
