@@ -1,33 +1,30 @@
 //
 //  FeedImagePresenter.swift
-//  EssentialFeediOS
+//  EssentialFeed
 //
-//  Created by MK on 07/12/21.
+//  Created by MK on 27/12/21.
 //
 
 import Foundation
-import EssentialFeed
-import UIKit
 
-
-protocol FeedImageView {
+public protocol FeedImageView {
     associatedtype Image
     
     func display(_ viewModel: FeedImageViewModel<Image>)
 }
 
-final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
-    typealias ImageTransformer = (Data) -> Image?
+public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
+    public typealias ImageTransformer = (Data) -> Image?
     
     private let imageTransformer: ImageTransformer
     private let view: View
     
-    init(view: View, imageTransformer: @escaping ImageTransformer) {
+    public init(view: View, imageTransformer: @escaping ImageTransformer) {
         self.view = view
         self.imageTransformer = imageTransformer
     }
     
-    func didStartLoadingImageData(model: FeedImage) {
+    public func didStartLoadingImageData(model: FeedImage) {
         view.display(FeedImageViewModel<Image>(
             image: nil,
             description: model.description,
@@ -39,7 +36,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
     
     private struct InvalidImageDataError: Error { }
     
-    func didFinishLoadingImageData(with data: Data, model: FeedImage) {
+    public func didFinishLoadingImageData(with data: Data, model: FeedImage) {
         guard let image = imageTransformer(data) else {
             return didFinishLoadingImageData(with: InvalidImageDataError(), model: model)
         }
@@ -53,7 +50,7 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
         ))
     }
     
-    func didFinishLoadingImageData(with error: Error, model: FeedImage) {
+    public func didFinishLoadingImageData(with error: Error, model: FeedImage) {
         view.display(FeedImageViewModel<Image>(
             image: nil,
             description: model.description,
@@ -62,5 +59,4 @@ final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == I
             shouldRetry: true
         ))
     }
-    
 }
