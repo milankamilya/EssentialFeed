@@ -14,17 +14,17 @@ public protocol FeedImageView {
 }
 
 public final class FeedImagePresenter<View: FeedImageView, Image> where View.Image == Image {
-    typealias ImageTransformer = (Data) -> Image?
+    public typealias ImageTransformer = (Data) -> Image?
     
     private let imageTransformer: ImageTransformer
     private let view: View
     
-    init(view: View, imageTransformer: @escaping ImageTransformer) {
+    public init(view: View, imageTransformer: @escaping ImageTransformer) {
         self.view = view
         self.imageTransformer = imageTransformer
     }
     
-    func didStartLoadingImageData(model: FeedImage) {
+    public func didStartLoadingImageData(model: FeedImage) {
         view.display(FeedImageViewModel<Image>(
             image: nil,
             description: model.description,
@@ -36,7 +36,7 @@ public final class FeedImagePresenter<View: FeedImageView, Image> where View.Ima
     
     private struct InvalidImageDataError: Error { }
     
-    func didFinishLoadingImageData(with data: Data, model: FeedImage) {
+    public func didFinishLoadingImageData(with data: Data, model: FeedImage) {
         guard let image = imageTransformer(data) else {
             return didFinishLoadingImageData(with: InvalidImageDataError(), model: model)
         }
@@ -50,7 +50,7 @@ public final class FeedImagePresenter<View: FeedImageView, Image> where View.Ima
         ))
     }
     
-    func didFinishLoadingImageData(with error: Error, model: FeedImage) {
+    public func didFinishLoadingImageData(with error: Error, model: FeedImage) {
         view.display(FeedImageViewModel<Image>(
             image: nil,
             description: model.description,
