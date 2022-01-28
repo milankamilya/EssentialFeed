@@ -84,6 +84,26 @@ class URLSessionHTTPClientTests: XCTestCase {
         
     }
     
+    func test_cancelGetFromURLTask_cancelsURLRequest() {
+        let url = anyURL()
+        let exp = expectation(description: "Waiting for request")
+        
+        let task = makeSUT().get(from: url) { result in
+            switch result {
+            case let .failure(error as NSError) where error.code == URLError.cancelled.rawValue:
+                break
+
+            default:
+                XCTFail("Expected to receive cancelled error, but receive \(result) instead.")
+            }
+            exp.fulfill()
+        }
+        
+        task.cancel()
+        
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> HTTPClient {
