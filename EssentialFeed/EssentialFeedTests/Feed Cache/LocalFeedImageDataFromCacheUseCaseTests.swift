@@ -79,17 +79,7 @@ class LocalFeedImageDataFromCacheUseCaseTests: XCTestCase {
         
         XCTAssertTrue(received.isEmpty, "Expected no results for a deallocated instance")
     }
-    
-    func test_saveIamgeDataForURL_requestImageDataInsertionForURL() {
-        let (sut, store) = makeSUT()
-        let data = anyData()
-        let url = anyURL()
-        
-        sut.save(data, for: url) {_ in}
-        
-        XCTAssertEqual(store.receivedMessages, [.insert(data: data, url: url)])
-    }
-    
+
     // MARK: - Helpers
     
     private func failed() -> FeedImageDataLoader.Result {
