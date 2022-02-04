@@ -34,7 +34,7 @@ class CacheFeedImageDataUseCaseTests: XCTestCase {
         }
     }
     
-    func test_saveImadDataForURL_succeedOnSuccessfulStoreInsertion() {
+    func test_saveImageDataForURL_succeedsOnSuccessfulStoreInsertion() {
         let (sut, store) = makeSUT()
         
         expect(sut, expecting: .success(())) {
