@@ -34,6 +34,26 @@ class CacheFeedImageDataUseCaseTests: XCTestCase {
         }
     }
     
+    func test_saveImadDataForURL_succeedOnSuccessfulStoreInsertion() {
+        let (sut, store) = makeSUT()
+        
+        expect(sut, expecting: .success(())) {
+            store.completeInsertionSuccessfully()
+        }
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedImageDataLoader, store: FeedImageDataStoreSpy) {
+        let store = FeedImageDataStoreSpy()
+        let sut = LocalFeedImageDataLoader(store: store)
+        
+        trackForMemoryLeaks(store, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return (sut, store)
+    }
+    
     private func expect(_ sut: LocalFeedImageDataLoader, expecting expectedResult: LocalFeedImageDataLoader.SaveResult, on action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Waiting for saving")
         
@@ -56,15 +76,4 @@ class CacheFeedImageDataUseCaseTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    // MARK: - Helpers
-    
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedImageDataLoader, store: FeedImageDataStoreSpy) {
-        let store = FeedImageDataStoreSpy()
-        let sut = LocalFeedImageDataLoader(store: store)
-        
-        trackForMemoryLeaks(store, file: file, line: line)
-        trackForMemoryLeaks(sut, file: file, line: line)
-        
-        return (sut, store)
-    }
 }
