@@ -92,6 +92,14 @@ class ValidateFeedCacheUseCaseTests: XCTestCase {
         }
     }
     
+    func test_validateCache_succeedsOnEmptyCache() {
+        let (sut, store) = makeSUT()
+        
+        expect(sut, toCompleteWith: .success(())) {
+            store.completionWithEmptyCache()
+        }
+    }
+    
     func test_validateCache_doesNotDeleteCacheAfterSUTInstanceHasBeenDeallocated() {
         let retrivalError = anyNSError()
         let store = FeedStoreSpy()
