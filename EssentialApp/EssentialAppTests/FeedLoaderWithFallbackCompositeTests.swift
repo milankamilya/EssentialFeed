@@ -34,17 +34,17 @@ class FeedLoaderWithFallbackCompositeTests: XCTestCase {
     }
     
     // MARK: - Helpers
-    private func makeSUT(primaryResult: FeedLoader.Result, fallbackResult: FeedLoader.Result, _ file: StaticString = #file, line: UInt = #line) -> FeedLoaderWithFallback {
+    private func makeSUT(primaryResult: FeedLoader.Result, fallbackResult: FeedLoader.Result, _ file: StaticString = #file, line: UInt = #line) -> FeedLoaderWithFallbackComposite {
         let primaryLoader = LoaderStub(result: primaryResult)
         let fallbackLoader = LoaderStub(result: fallbackResult)
-        let sut = FeedLoaderWithFallback(primary: primaryLoader, fallback: fallbackLoader)
+        let sut = FeedLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
         trackForMemoryLeaks(primaryLoader, file: file, line: line)
         trackForMemoryLeaks(fallbackLoader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
     }
     
-    private func expect(_ sut: FeedLoaderWithFallback, toCompleteWith expectedResult: FeedLoader.Result, _ file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedLoaderWithFallbackComposite, toCompleteWith expectedResult: FeedLoader.Result, _ file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for load completion")
         sut.load { receivedResult in
             switch (receivedResult, expectedResult) {
