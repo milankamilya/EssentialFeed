@@ -18,6 +18,7 @@
 		4D82E06227C491B0002D5ABB /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D82E05F27C491B0002D5ABB /* EssentialFeediOS.framework */; };
 		4D82E06327C491B0002D5ABB /* EssentialFeediOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4D82E05F27C491B0002D5ABB /* EssentialFeediOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		4DB0ACB027C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DB0ACAF27C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift */; };
+		4DC0280427CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC0280327CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		4D82E05F27C491B0002D5ABB /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DB0ACAE27C8811700015141 /* EssentialAppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EssentialAppTests-Bridging-Header.h"; sourceTree = "<group>"; };
 		4DB0ACAF27C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderWithFallbackCompositeTests.swift; sourceTree = "<group>"; };
+		4DC0280327CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 			children = (
 				4DB0ACAF27C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift */,
 				4DB0ACAE27C8811700015141 /* EssentialAppTests-Bridging-Header.h */,
+				4DC0280327CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DC0280427CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				4DB0ACB027C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
