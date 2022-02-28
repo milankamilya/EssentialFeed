@@ -44,9 +44,7 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     func test_loadImageData_deliversSuccessOnPrimaryLoaderSuccess() {
         let primaryData = anyData()
         let fallbackData = anyData()
-        let primaryLoader = FeedImageDataLoaderStub(result: .success(primaryData))
-        let fallbackLoader = FeedImageDataLoaderStub(result: .success(fallbackData))
-        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
+        let sut = makeSUT(primaryResult: .success(primaryData), fallbackResult: .success(fallbackData))
         
         let exp = expectation(description: "Waiting for load completion")
         _ = sut.loadImageData(from: anyURL()) { result in
@@ -64,9 +62,7 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     
     func test_loadImageData_deliversFallbackSuccessOnPrimaryLoaderFailure() {
         let fallbackData = anyData()
-        let primaryLoader = FeedImageDataLoaderStub(result: .failure(anyNSError()))
-        let fallbackLoader = FeedImageDataLoaderStub(result: .success(fallbackData))
-        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
+        let sut = makeSUT(primaryResult: .failure(anyNSError()), fallbackResult: .success(fallbackData))
         
         let exp = expectation(description: "Waiting for load completion")
         _ = sut.loadImageData(from: anyURL()) { result in
@@ -80,6 +76,18 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
             exp.fulfill()
         }
         wait(for: [exp], timeout: 1.0)
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT(primaryResult: FeedImageDataLoader.Result, fallbackResult: FeedImageDataLoader.Result, _ file: StaticString = #file, line: UInt = #line) -> FeedImageDataLoaderWithFallbackComposite {
+        let primaryLoader = FeedImageDataLoaderStub(result: primaryResult)
+        let fallbackLoader = FeedImageDataLoaderStub(result: fallbackResult)
+        let sut = FeedImageDataLoaderWithFallbackComposite(primary: primaryLoader, fallback: fallbackLoader)
+        trackForMemoryLeaks(primaryLoader, file: file, line: line)
+        trackForMemoryLeaks(fallbackLoader, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        return sut
     }
     
     private func anyURL() -> URL {
