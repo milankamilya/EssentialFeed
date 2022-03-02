@@ -118,6 +118,26 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         primary.complete(with: primaryData)
     }
     
+    func test_loadImageData_deliversFallableDataOnFallableLoaderSuccess() {
+        let url = anyURL()
+        let primaryError = anyNSError()
+        let fallableData = anyData()
+        let (sut, primary, fallable) = makeSUT()
+        
+        _ = sut.loadImageData(from: url) { result in
+            switch result {
+            case let .success(receivedData):
+                XCTAssertEqual(receivedData, fallableData, "Expected to receive primary data")
+            
+            case let .failure(error):
+                XCTFail("Expected to receive success, but got \(error) instead.")
+            }
+        }
+        
+        primary.complete(with: primaryError)
+        fallable.complete(with: fallableData)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT( _ file: StaticString = #file, line: UInt = #line) -> (FeedImageDataLoaderWithFallbackComposite, FeedImageDataLoaderSpy, FeedImageDataLoaderSpy) {
