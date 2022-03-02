@@ -45,8 +45,8 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
     func test_init_doesNotLoadImageData() {
         let (_, primary, fallback) = makeSUT()
                 
-        XCTAssertTrue(primary.loadedURLs.isEmpty)
-        XCTAssertTrue(fallback.loadedURLs.isEmpty)
+        XCTAssertTrue(primary.loadedURLs.isEmpty, "Expected no loaded URLs in the primary loader")
+        XCTAssertTrue(fallback.loadedURLs.isEmpty, "Expected no loaded URLs in the fallable loader")
     }
     
     func test_loadImageData_loadsFromPrimaryLoaderFirst() {
@@ -55,8 +55,8 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         _ = sut.loadImageData(from: url) { _ in}
         
-        XCTAssertEqual(primary.loadedURLs, [url])
-        XCTAssertTrue(fallback.loadedURLs.isEmpty)
+        XCTAssertEqual(primary.loadedURLs, [url], "Expected to load URLs from primary loader")
+        XCTAssertTrue(fallback.loadedURLs.isEmpty, "Expected no loaded URLs in the fallable loader")
     }
     
     func test_loadImageData_loadsFallbackLoaderOnPrimaryLoaderFailure() {
@@ -68,8 +68,8 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         primary.complete(with: primaryError)
         
-        XCTAssertEqual(primary.loadedURLs, [url])
-        XCTAssertEqual(fallback.loadedURLs, [url])
+        XCTAssertEqual(primary.loadedURLs, [url], "Expected to load URLs from primary loader")
+        XCTAssertEqual(fallback.loadedURLs, [url], "Expected to load URLs from fallable loader")
     }
     
     func test_loadIamgeData_cancelsPrimaryTaskOnCancel() {
@@ -80,9 +80,8 @@ class FeedImageDataLoaderWithFallbackCompositeTests: XCTestCase {
         
         task.cancel()
         
-        XCTAssertEqual(primary.loadedURLs, [url])
-        XCTAssertEqual(primary.cancelledURLS, [url])
-        XCTAssertTrue(fallback.loadedURLs.isEmpty)
+        XCTAssertEqual(primary.cancelledURLS, [url], "Expected to cancel URL loading from primary loader")
+        XCTAssertTrue(fallback.cancelledURLS.isEmpty, "Expected no cancelled URL loading in the fallable loader")
     }
     
     // MARK: - Helpers
