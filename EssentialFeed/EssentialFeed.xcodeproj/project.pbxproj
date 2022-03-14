@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D23002F27DEE9B300C19EBD /* FeedCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23002E27DEE9B300C19EBD /* FeedCache.swift */; };
 		4D252A1B272F9A0700FE8982 /* LoadFeedFromRemoteUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D252A1A272F9A0700FE8982 /* LoadFeedFromRemoteUseCaseTests.swift */; };
 		4D3F70B927701F7400198F12 /* FeedPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3F70B827701F7400198F12 /* FeedPresenterTests.swift */; };
 		4D3F70C427702CA200198F12 /* FeedPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3F70C327702CA200198F12 /* FeedPresenter.swift */; };
@@ -135,6 +136,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D23002E27DEE9B300C19EBD /* FeedCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCache.swift; sourceTree = "<group>"; };
 		4D252A1A272F9A0700FE8982 /* LoadFeedFromRemoteUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadFeedFromRemoteUseCaseTests.swift; sourceTree = "<group>"; };
 		4D3F70B827701F7400198F12 /* FeedPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedPresenterTests.swift; sourceTree = "<group>"; };
 		4D3F70BD27702A5700198F12 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Feed.strings; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 				4DE0F9B327A8E33900DA466F /* FeedImage.swift */,
 				4DE0F9B427A8E33900DA466F /* FeedImageDataLoader.swift */,
 				4DE0F9B527A8E33900DA466F /* FeedLoader.swift */,
+				4D23002E27DEE9B300C19EBD /* FeedCache.swift */,
 			);
 			path = "Feed Feature";
 			sourceTree = "<group>";
@@ -890,6 +893,7 @@
 				4D9E97312746084B00AF9B88 /* ManagedCache.swift in Sources */,
 				4DA1B42527AB7C9E00552D3E /* LocalFeedImageDataLoader.swift in Sources */,
 				4D832478277965CD00E4F0FB /* FeedImagePresenter.swift in Sources */,
+				4D23002F27DEE9B300C19EBD /* FeedCache.swift in Sources */,
 				4D9E97332746088900AF9B88 /* ManagedFeedImage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
