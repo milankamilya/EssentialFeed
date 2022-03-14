@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D23002927DEDCEB00C19EBD /* FeedLoaderCacheDecoratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23002827DEDCEB00C19EBD /* FeedLoaderCacheDecoratorTests.swift */; };
 		4D82E02E27C48DCA002D5ABB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E02D27C48DCA002D5ABB /* AppDelegate.swift */; };
 		4D82E03027C48DCA002D5ABB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E02F27C48DCA002D5ABB /* SceneDelegate.swift */; };
 		4D82E03227C48DCA002D5ABB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E03127C48DCA002D5ABB /* ViewController.swift */; };
@@ -58,6 +59,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D23002827DEDCEB00C19EBD /* FeedLoaderCacheDecoratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderCacheDecoratorTests.swift; sourceTree = "<group>"; };
 		4D82E02A27C48DCA002D5ABB /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D82E02D27C48DCA002D5ABB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D82E02F27C48DCA002D5ABB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				4DB0ACAF27C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift */,
 				4DB0ACAE27C8811700015141 /* EssentialAppTests-Bridging-Header.h */,
 				4DC0280727CC70670030D854 /* FeedImageDataLoaderWithFallbackCompositeTests.swift */,
+				4D23002827DEDCEB00C19EBD /* FeedLoaderCacheDecoratorTests.swift */,
 			);
 			path = EssentialAppTests;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC2094127CF295D008AC20F /* SharedTestHelpers.swift in Sources */,
+				4D23002927DEDCEB00C19EBD /* FeedLoaderCacheDecoratorTests.swift in Sources */,
 				4DC0280427CC688A0030D854 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				4DC0280827CC70670030D854 /* FeedImageDataLoaderWithFallbackCompositeTests.swift in Sources */,
 				4DB0ACB027C8811700015141 /* FeedLoaderWithFallbackCompositeTests.swift in Sources */,
