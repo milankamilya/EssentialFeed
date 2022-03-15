@@ -8,7 +8,10 @@
 import XCTest
 import EssentialFeed
 
-extension XCTestCase {
+protocol FeedImageDataLoaderTestCase: XCTestCase { }
+
+extension FeedImageDataLoaderTestCase {
+    
     func expect(_ sut: FeedImageDataLoader, toCompleteWith expectedResult: FeedImageDataLoader.Result, on action: () -> Void, _ file: StaticString = #file, line: UInt = #line) {
         
         let exp = expectation(description: "Waiting for image loading")
