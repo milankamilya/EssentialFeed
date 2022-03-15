@@ -36,6 +36,12 @@ final class FeedImageDataLoaderCacheDecorator: FeedImageDataLoader {
 
 class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
 
+    func test_loadImageData_doesNotLoadOnInit() {
+        let (_, loader) = makeSUT()
+            
+        XCTAssertTrue(loader.messages.isEmpty, "Expected not to receive any load request on init")
+    }
+    
     func test_cancelLoadImageData_cancelsLoaderTask() {
         let (sut, loader) = makeSUT()
         let url = anyURL()
