@@ -82,7 +82,18 @@ class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         loader.complete(with: anyNSError())
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertTrue(cache.messages.isEmpty, "Expected to receive save message, but got \(cache.messages) instead.")
+        XCTAssertTrue(cache.messages.isEmpty, "Expected not to save cache, but got \(cache.messages) instead.")
+    }
+    
+    func test_loadImageData_doesNotCacheOnLoaderTaskCancelled() {
+        let cache = FeedImageDataCacheSpy()
+        let (sut, _) = makeSUT(with: cache)
+        let url = anyURL()
+        
+        let task = sut.loadImageData(from: url) {_ in}
+        task.cancel()
+        
+        XCTAssertTrue(cache.messages.isEmpty, "Expected not to save cache, but got \(cache.messages) instead.")
     }
     
     // MARK: - Helpers
