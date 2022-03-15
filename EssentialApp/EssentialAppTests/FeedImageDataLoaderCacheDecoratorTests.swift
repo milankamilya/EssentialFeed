@@ -60,12 +60,8 @@ class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         let url = anyURL()
         let data = anyData()
         
-        let exp = expectation(description: "Waiting for loading")
-        _ = sut.loadImageData(from: url) { result in
-            exp.fulfill()
-        }
+        _ = sut.loadImageData(from: url) {_ in}
         loader.complete(with: data)
-        wait(for: [exp], timeout: 1.0)
         
         XCTAssertEqual(cache.messages, [.save(data, url)], "Expected to receive save message, but got \(cache.messages) instead.")
     }
@@ -75,12 +71,8 @@ class FeedImageDataLoaderCacheDecoratorTests: XCTestCase {
         let (sut, loader) = makeSUT(with: cache)
         let url = anyURL()
         
-        let exp = expectation(description: "Waiting for loading")
-        _ = sut.loadImageData(from: url) { result in
-            exp.fulfill()
-        }
+        _ = sut.loadImageData(from: url) {_ in}
         loader.complete(with: anyNSError())
-        wait(for: [exp], timeout: 1.0)
         
         XCTAssertTrue(cache.messages.isEmpty, "Expected not to save cache, but got \(cache.messages) instead.")
     }
