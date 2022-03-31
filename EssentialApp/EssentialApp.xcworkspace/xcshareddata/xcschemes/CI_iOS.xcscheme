@@ -20,6 +20,20 @@
                ReferencedContainer = "container:../EssentialFeed/EssentialFeed.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D2D003227ED702400AEABB9"
+               BuildableName = "EssentialAppUIAcceptanceTests.xctest"
+               BlueprintName = "EssentialAppUIAcceptanceTests"
+               ReferencedContainer = "container:EssentialApp.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -96,6 +110,62 @@
                BlueprintName = "EssentialFeediOSTests"
                ReferencedContainer = "container:../EssentialFeed/EssentialFeed.xcodeproj">
             </BuildableReference>
+            <SelectedTests>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_errorView_renderErrorMessageOnErrorUntilNextReload()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feedImageView_cancelsImageLoadingWhenNotVisibleAnymore()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feedImageView_doesNotRenderLoadedImageWhenNotVisibleAnymore()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feedImageView_loadsImageURLWhenVisible()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feedView_hasTitle()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageViewLoadingIndicator_isVisibleWhileLoadingImage()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageViewRetryButton_isVisibleOnImageURLLoadError()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageViewRetryButton_isVisibleOnInvalidImageData()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageViewRetryButton_retriesImageLoad()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageView_cancelsImageURLPreloadinWhenNotNearVisibleAnymore()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageView_preloadsImageURLWhenNearVisible()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_feeedImageView_rendersImageLoadedFromURL()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadFeedActions_requestFeedFromLoader()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadFeedCompletion_dispatchesFromBackgroundThreadToMainThread()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadFeedCompletion_rendersSuccessfullyLoadedFeed()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadFeedCompletion_shouldNotAlterCurrentRenderingStateOnError()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadImageDataCompletion_dispatchesFromBackgroundToMainThread()">
+               </Test>
+               <Test
+                  Identifier = "FeedUIIntegrationTests/test_loadingFeedIndicator_isVisibleWhileLoadingFeed()">
+               </Test>
+            </SelectedTests>
          </TestableReference>
          <TestableReference
             skipped = "NO"
@@ -105,6 +175,17 @@
                BlueprintIdentifier = "4D82E03F27C48DCD002D5ABB"
                BuildableName = "EssentialAppTests.xctest"
                BlueprintName = "EssentialAppTests"
+               ReferencedContainer = "container:EssentialApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            testExecutionOrdering = "random">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4D2D003227ED702400AEABB9"
+               BuildableName = "EssentialAppUIAcceptanceTests.xctest"
+               BlueprintName = "EssentialAppUIAcceptanceTests"
                ReferencedContainer = "container:EssentialApp.xcodeproj">
             </BuildableReference>
          </TestableReference>
