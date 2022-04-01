@@ -78,6 +78,7 @@
 		4DD7852827F6AF5E0057EAA3 /* EssentialFeediOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DD9FD55274B187E003761C7 /* EssentialFeediOS.framework */; };
 		4DD7853127F6AFCB0057EAA3 /* FeedSnapshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD7853027F6AFCB0057EAA3 /* FeedSnapshotTests.swift */; };
 		4DD7853427F6B6650057EAA3 /* UIImage+TestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD7853327F6B6650057EAA3 /* UIImage+TestHelpers.swift */; };
+		4DD7853627F6B8220057EAA3 /* UITableView+HeaderSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DD7853527F6B8220057EAA3 /* UITableView+HeaderSizing.swift */; };
 		4DDCD8AB274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDCD8AA274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift */; };
 		4DDCD8AC274725A8001C124E /* EssentialFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D9BDBF3272F9839006D6EC7 /* EssentialFeed.framework */; };
 		4DDCD8B227472988001C124E /* XCTTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DA124FA2738E2570024ECCF /* XCTTestCase+MemoryLeakTracking.swift */; };
@@ -198,6 +199,7 @@
 		4DD7852427F6AF5E0057EAA3 /* EssentialFeediOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeediOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DD7853027F6AFCB0057EAA3 /* FeedSnapshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSnapshotTests.swift; sourceTree = "<group>"; };
 		4DD7853327F6B6650057EAA3 /* UIImage+TestHelpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIImage+TestHelpers.swift"; path = "../../../EssentialApp/EssentialAppTests/Helpers/UIImage+TestHelpers.swift"; sourceTree = "<group>"; };
+		4DD7853527F6B8220057EAA3 /* UITableView+HeaderSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+HeaderSizing.swift"; sourceTree = "<group>"; };
 		4DD9FD55274B187E003761C7 /* EssentialFeediOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = EssentialFeediOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDCD8A8274725A8001C124E /* EssentialFeedCacheIntegrationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialFeedCacheIntegrationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DDCD8AA274725A8001C124E /* EssentialFeedCacheIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EssentialFeedCacheIntegrationTests.swift; sourceTree = "<group>"; };
@@ -475,6 +477,7 @@
 				4DB8DE242761983B0091EF34 /* UITableView+Dequeueing.swift */,
 				4DB8DE2627619A6F0091EF34 /* UIImageView+Animations.swift */,
 				4DAB361D276C31D700221D11 /* UIRefreshControl+Helpers.swift */,
+				4DD7853527F6B8220057EAA3 /* UITableView+HeaderSizing.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -896,6 +899,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DD7853627F6B8220057EAA3 /* UITableView+HeaderSizing.swift in Sources */,
 				4DAB3619276C29C500221D11 /* ErrorView.swift in Sources */,
 				4DAB361E276C31D700221D11 /* UIRefreshControl+Helpers.swift in Sources */,
 				4DB8DE252761983B0091EF34 /* UITableView+Dequeueing.swift in Sources */,
