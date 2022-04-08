@@ -13,6 +13,8 @@ import XCTest
 extension FeedUIIntegrationTests {
     
     func assertThat(_ sut: FeedViewController, isRendering feed: [FeedImage], file: StaticString = #file, line: UInt = #line) {
+        sut.view.layoutIfNeeded()
+        RunLoop.main.run(until: Date())
         
         guard sut.numberOfRenderedFeedImageView() == feed.count else {
             XCTFail("Expected \(feed.count) cells to render, but render only \(sut.numberOfRenderedFeedImageView()) instead.", file: file, line: line)
