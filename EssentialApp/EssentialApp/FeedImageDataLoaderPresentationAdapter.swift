@@ -29,9 +29,11 @@ class FeedImageDataLoaderPresentationAdapter<View: FeedImageView, Image>: FeedIm
         let model = self.model
         
         cancellable = imageLoader(model.url)
+            .dispatchOnMainQueue()
             .sink { [weak self] completion in
                 switch completion {
                 case .finished: break
+
                 case let .failure(error):
                     self?.presenter?.didFinishLoadingImageData(with: error, model: model)
                 }
@@ -43,5 +45,5 @@ class FeedImageDataLoaderPresentationAdapter<View: FeedImageView, Image>: FeedIm
     func didCancelRequestImage() {
         cancellable?.cancel()
     }
-
+    
 }
