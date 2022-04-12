@@ -7,11 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D1380C22805231F005FE900 /* CombineHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1380C12805231F005FE900 /* CombineHelpers.swift */; };
 		4D23002B27DEDF1500C19EBD /* FeedLoaderStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23002A27DEDF1500C19EBD /* FeedLoaderStub.swift */; };
 		4D23002D27DEE06000C19EBD /* XCTestCase+FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D23002C27DEE06000C19EBD /* XCTestCase+FeedLoader.swift */; };
 		4D82E02E27C48DCA002D5ABB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E02D27C48DCA002D5ABB /* AppDelegate.swift */; };
 		4D82E03027C48DCA002D5ABB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E02F27C48DCA002D5ABB /* SceneDelegate.swift */; };
-		4D82E03227C48DCA002D5ABB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D82E03127C48DCA002D5ABB /* ViewController.swift */; };
 		4D82E03527C48DCA002D5ABB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D82E03327C48DCA002D5ABB /* Main.storyboard */; };
 		4D82E03727C48DCD002D5ABB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4D82E03627C48DCD002D5ABB /* Assets.xcassets */; };
 		4D82E03A27C48DCD002D5ABB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D82E03827C48DCD002D5ABB /* LaunchScreen.storyboard */; };
@@ -75,13 +75,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D1380C12805231F005FE900 /* CombineHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineHelpers.swift; sourceTree = "<group>"; };
 		4D23002A27DEDF1500C19EBD /* FeedLoaderStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderStub.swift; sourceTree = "<group>"; };
 		4D23002C27DEE06000C19EBD /* XCTestCase+FeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedLoader.swift"; sourceTree = "<group>"; };
 		4D2D003327ED702400AEABB9 /* EssentialAppUIAcceptanceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EssentialAppUIAcceptanceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D82E02A27C48DCA002D5ABB /* EssentialApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EssentialApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D82E02D27C48DCA002D5ABB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D82E02F27C48DCA002D5ABB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		4D82E03127C48DCA002D5ABB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		4D82E03427C48DCA002D5ABB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4D82E03627C48DCD002D5ABB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4D82E03927C48DCD002D5ABB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -164,7 +164,7 @@
 			children = (
 				4D82E02D27C48DCA002D5ABB /* AppDelegate.swift */,
 				4D82E02F27C48DCA002D5ABB /* SceneDelegate.swift */,
-				4D82E03127C48DCA002D5ABB /* ViewController.swift */,
+				4D1380C12805231F005FE900 /* CombineHelpers.swift */,
 				4D8B813927F5571500046644 /* FeedUIComposer.swift */,
 				4D8B813D27F5571500046644 /* FeedViewAdapter.swift */,
 				4D8B813A27F5571500046644 /* FeedImageDataLoaderPresentationAdapter.swift */,
@@ -360,8 +360,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4D82E03227C48DCA002D5ABB /* ViewController.swift in Sources */,
 				4D8B813F27F5571600046644 /* FeedUIComposer.swift in Sources */,
+				4D1380C22805231F005FE900 /* CombineHelpers.swift in Sources */,
 				4D8B814427F5571600046644 /* FeedImageDataLoaderPresentationAdapter.swift in Sources */,
 				4D82E02E27C48DCA002D5ABB /* AppDelegate.swift in Sources */,
 				4D8B814127F5571600046644 /* FeedViewAdapter.swift in Sources */,
