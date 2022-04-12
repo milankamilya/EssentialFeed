@@ -81,11 +81,11 @@ final class FeedUIIntegrationTests: XCTestCase {
         assertThat(sut, isRendering: [image0, image1])
         
         sut.simulateuserInitiatedFeedReload()
-        loader.completeFeedLoading(with: [], at: 0)
+        loader.completeFeedLoading(with: [], at: 1)
         assertThat(sut, isRendering: [])
     }
     
-    func test_loadFeedCompletion_shouldNotAlterCurrentRenderingStateOnError() {
+    func test_loadFeedCompletion_shouldNoftAlterCurrentRenderingStateOnError() {
         let image0 = makeImage(description: "a description", location: "a location")
         let (sut, loader) = makeSUT()
         
@@ -322,7 +322,7 @@ final class FeedUIIntegrationTests: XCTestCase {
     // MARK: - Helper
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedViewController, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = FeedUIComposer.feedComposedWith(feedLoader: loader, imageLoader: loader)
+        let sut = FeedUIComposer.feedComposedWith(feedLoader: loader.loadPublisher, imageLoader: loader)
         trackForMemoryLeaks(sut, file: file, line: line)
         trackForMemoryLeaks(loader, file: file, line: line)
         return (sut, loader)
