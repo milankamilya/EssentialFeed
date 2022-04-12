@@ -6,18 +6,19 @@
 //
 
 import Foundation
+import Combine
 import EssentialFeed
 import EssentialFeediOS
 
 class FeedImageDataLoaderPresentationAdapter<View: FeedImageView, Image>: FeedImageCellControllerDelegate where View.Image == Image {
     
-    private var task: FeedImageDataLoaderTask?
+    private var cancellable: Cancellable?
     private let model: FeedImage
-    private let imageLoader: FeedImageDataLoader
+    private let imageLoader: (URL) -> FeedImageDataLoader.Publisher
     
     var presenter: FeedImagePresenter<View, Image>?
     
-    init(model: FeedImage, imageLoader: FeedImageDataLoader) {
+    init(model: FeedImage, imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) {
         self.model = model
         self.imageLoader = imageLoader
     }
@@ -25,22 +26,24 @@ class FeedImageDataLoaderPresentationAdapter<View: FeedImageView, Image>: FeedIm
     func didRequestImage() {
         presenter?.didStartLoadingImageData(model: model)
         
-        task = imageLoader.loadImageData(from: self.model.url) { [weak self] result in
-            guard let self = self else { return }
-            
-            switch result {
-            case let .success(data):
-                self.presenter?.didFinishLoadingImageData(with: data, model: self.model)
-                
-            case let .failure(error):
-                self.presenter?.didFinishLoadingImageData(with: error, model: self.model)
+        let model = self.model
+        
+        cancellable = imageLoader(model.url)
+            .dispatchOnMainQueue()
+            .sink { [weak self] completion in
+                switch completion {
+                case .finished: break
+
+                case let .failure(error):
+                    self?.presenter?.didFinishLoadingImageData(with: error, model: model)
+                }
+            } receiveValue: { [weak self] data in
+                self?.presenter?.didFinishLoadingImageData(with: data, model: model)
             }
-        }
     }
     
     func didCancelRequestImage() {
-        task?.cancel()
-        task = nil
+        cancellable?.cancel()
     }
-
+    
 }
