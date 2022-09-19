@@ -30,14 +30,14 @@ class FeedItemsMapperTests: XCTestCase {
         )
     }
     
-    func test_map_throwsNoitemsON200HTTPResponseWithEmptyJSONList() throws {
+    func test_map_deliversNoitemsON200HTTPResponseWithEmptyJSONList() throws {
         let emptyListJSON = makeItemsJSON(items: [])
 
         let result = try FeedItemsMapper.map(emptyListJSON, HTTPURLResponse(statusCode: 200))
         XCTAssertEqual(result, [])
     }
     
-    func test_map_throwsFeeditemsON200HTTPResponseJSONItems() throws {
+    func test_map_deliversFeeditemsON200HTTPResponseJSONItems() throws {
         let item1 = makeItem(
             id: UUID(),
             imageURL: URL(string: "http://a-url.com")!)
