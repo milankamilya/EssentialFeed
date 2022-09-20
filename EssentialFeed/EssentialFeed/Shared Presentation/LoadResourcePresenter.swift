@@ -18,14 +18,6 @@ public final class LoadResourcePresenter {
         self.errorView = errorView
     }
     
-    public static var title: String {
-        return NSLocalizedString(
-            "FEED_VIEW_TITLE",
-            tableName: "Feed",
-            bundle: Bundle(for: LoadResourcePresenter.self),
-            comment: "Title for the feed view")
-    }
-    
     private var feedLoadError: String {
         return NSLocalizedString(
             "FEED_VIEW_CONNECTION_ERROR",
@@ -34,7 +26,7 @@ public final class LoadResourcePresenter {
             comment: "Error message when you can't load image feed from server")
     }
     
-    public func didStartLoadingFeed() {
+    public func didStartLoading() {
         errorView.display(.noError)
         loadingView.display(FeedLoadingViewModel(isLoading: true))
     }
