@@ -59,4 +59,14 @@ public final class FeedImagePresenter<View: FeedImageView, Image> where View.Ima
             shouldRetry: true
         ))
     }
+    
+    public static func map(_ image: FeedImage) -> FeedImageViewModel<Image> {
+        FeedImageViewModel<Image>(
+            image: nil,
+            description: image.description,
+            location: image.location,
+            isLoading: false,
+            shouldRetry: false
+        )
+    }
 }
