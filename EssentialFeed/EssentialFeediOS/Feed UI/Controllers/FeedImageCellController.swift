@@ -13,11 +13,15 @@ public protocol FeedImageCellControllerDelegate {
     func didCancelRequestImage()
 }
 
-public final class FeedImageCellController: FeedImageView {
+public final class FeedImageCellController: ResourceView, ResourceLoadingView, ResourceErrorView {
     
+    public typealias ResourceViewModel = UIImage
+    
+    private let viewModel: FeedImageViewModel
     private let delegate: FeedImageCellControllerDelegate
     
-    public init(delegate: FeedImageCellControllerDelegate) {
+    public init(viewModel: FeedImageViewModel, delegate: FeedImageCellControllerDelegate) {
+        self.viewModel = viewModel
         self.delegate = delegate
     }
     
@@ -25,6 +29,10 @@ public final class FeedImageCellController: FeedImageView {
     
     func view(in tableView: UITableView ) -> UITableViewCell {
         cell = tableView.dequeueReusableCell()
+        cell?.locationContainer.isHidden = !viewModel.hasLocation
+        cell?.locationLabel.text = viewModel.location
+        cell?.descriptionLabel.text = viewModel.description
+        cell?.onRetry = delegate.didRequestImage
         delegate.didRequestImage()
         return cell!
     }
@@ -37,15 +45,17 @@ public final class FeedImageCellController: FeedImageView {
         releaseCellForReuse()
         delegate.didCancelRequestImage()
     }
-    
-    public func display(_ viewModel: FeedImageViewModel<UIImage>) {
-        cell?.feedImageView.setImageAnimated(viewModel.image)
-        cell?.locationContainer.isHidden = !viewModel.hasLocation
-        cell?.locationLabel.text = viewModel.location
-        cell?.descriptionLabel.text = viewModel.description
+        
+    public func display(_ viewModel: ResourceLoadingViewModel) {
         cell?.feedImageContainer.isShimmering = viewModel.isLoading
-        cell?.feedImageRetryButton.isHidden = !viewModel.shouldRetry
-        cell?.onRetry = delegate.didRequestImage
+    }
+    
+    public func display(_ viewModel: ResourceErrorViewModel) {
+        cell?.feedImageRetryButton.isHidden = viewModel.message == nil
+    }
+    
+    public func display(_ viewModel: UIImage) {
+        cell?.feedImageView.setImageAnimated(viewModel)
     }
     
     func releaseCellForReuse() {
