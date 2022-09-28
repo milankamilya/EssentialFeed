@@ -51,8 +51,12 @@ extension ListViewController {
         return refreshControl?.isRefreshing == true
     }
     
+    func simulateErrorViewTap() {
+        errorView.simulateTap()
+    }
+    
     var errorMessage: String? {
-        return errorView?.message
+        return errorView.message
     }
     
     func numberOfRenderedFeedImageView() -> Int {
