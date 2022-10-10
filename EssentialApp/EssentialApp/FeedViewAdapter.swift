@@ -11,10 +11,10 @@ import EssentialFeed
 import EssentialFeediOS
 
 final class FeedViewAdapter: ResourceView {
-    weak var controller: FeedViewController?
+    weak var controller: ListViewController?
     let imageLoader: (URL) -> FeedImageDataLoader.Publisher
     
-    init(controller: FeedViewController, imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) {
+    init(controller: ListViewController, imageLoader: @escaping (URL) -> FeedImageDataLoader.Publisher) {
         self.controller = controller
         self.imageLoader = imageLoader
     }
@@ -40,7 +40,7 @@ final class FeedViewAdapter: ResourceView {
                     return image
                 })
             
-            return view
+            return CellController(id: model, view)
         })
     }
 }
