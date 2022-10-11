@@ -97,7 +97,7 @@ class CommentsUIIntegrationTests: FeedUIIntegrationTests {
         
     }
     
-    override func test_loadFeedCompletion_dispatchesFromBackgroundThreadToMainThread() {
+    func test_loadCommentsCompletion_dispatchesFromBackgroundThreadToMainThread() {
         let (sut, loader) = makeSUT()
         
         sut.loadViewIfNeeded()
