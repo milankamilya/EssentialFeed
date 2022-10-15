@@ -15,9 +15,55 @@ extension ListViewController {
         tableView.frame = CGRect(x: 0, y: 0, width: 1, height: 1)
     }
 
-    func simulateuserInitiatedFeedReload() {
+    func simulateuserInitiatedReload() {
         refreshControl?.simulatePullToRefresh()
     }
+    
+    var isShowingLoadingIndicator: Bool {
+        return refreshControl?.isRefreshing == true
+    }
+    
+    func simulateErrorViewTap() {
+        errorView.simulateTap()
+    }
+    
+    var errorMessage: String? {
+        return errorView.message
+    }
+}
+
+extension ListViewController {
+    func numberOfRenderedImageCommentsView() -> Int {
+        tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
+    }
+        
+    func commentMessage(at index: Int) -> String? {
+        commentView(at: index)?.messageLabel.text
+    }
+    
+    func commentDate(at index: Int) -> String? {
+        commentView(at: index)?.dateLabel.text
+    }
+    
+    func commentUsername(at index: Int) -> String? {
+        commentView(at: index)?.usernameLabel.text
+    }
+    
+    func commentView(at row: Int) -> ImageCommentCell? {
+        if numberOfRenderedImageCommentsView() == 0 {
+            return nil
+        }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: commentsSection)
+        return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
+    }
+    
+    private var commentsSection: Int {
+        return 0
+    }
+}
+
+extension ListViewController {
     
     @discardableResult
     func simulateFeedImageViewVisible(at index: Int) -> FeedImageCell? {
@@ -39,6 +85,12 @@ extension ListViewController {
         
     }
     
+    func simulateTapOnFeedImage(at row: Int) {
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: row, section: feedImagesSection)
+        delegate?.tableView?(tableView, didSelectRowAt: indexPath)
+    }
+    
     func simulateFeedImageViewNearVisible(at row: Int = 0) {
         let pds = tableView.prefetchDataSource
         let indexPath = IndexPath(row: row, section: feedImagesSection)
@@ -52,19 +104,7 @@ extension ListViewController {
         let indexPath = IndexPath(row: row, section: feedImagesSection)
         pds?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
     }
-    
-    var isShowingLoadingIndicator: Bool {
-        return refreshControl?.isRefreshing == true
-    }
-    
-    func simulateErrorViewTap() {
-        errorView.simulateTap()
-    }
-    
-    var errorMessage: String? {
-        return errorView.message
-    }
-    
+
     func numberOfRenderedFeedImageView() -> Int {
         tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
     }

@@ -23,7 +23,7 @@ public struct ImageCommentViewModel {
     }
 }
 
-extension ImageCommentViewModel: Equatable { }
+extension ImageCommentViewModel: Hashable { }
 
 public class ImageCommentsPresenter {
     public static var title: String {

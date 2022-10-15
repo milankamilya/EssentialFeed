@@ -77,7 +77,7 @@ class FeedSnapshotTests: XCTestCase {
 private extension ListViewController {
     func display(_ stubs: [ImageStub]) {
         let cells: [CellController] = stubs.map { stub in
-            let view = FeedImageCellController(viewModel: stub.viewModel, delegate: stub)
+            let view = FeedImageCellController(viewModel: stub.viewModel, delegate: stub, selection: { })
             stub.controller = view
             return CellController(id: UUID(), view)
         }
