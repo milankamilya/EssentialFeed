@@ -112,6 +112,13 @@ extension ListViewController {
         let indexPath = IndexPath(row: row, section: feedImagesSection)
         pds?.tableView?(tableView, cancelPrefetchingForRowsAt: [indexPath])
     }
+    
+    func simulateLoadMoreFeedAction() {
+        guard let cell = cell(row: 0, section: feedLoadMoreSection) else { return }
+        let delegate = tableView.delegate
+        let indexPath = IndexPath(row: 0, section: feedLoadMoreSection)
+        delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
+    }
 
     func numberOfRenderedFeedImageView() -> Int {
         tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
@@ -121,7 +128,6 @@ extension ListViewController {
         cell(row: row, section: feedImagesSection) as? FeedImageCell
     }
     
-    private var feedImagesSection: Int {
-        return 0
-    }
+    private var feedImagesSection: Int { 0 }
+    private var feedLoadMoreSection: Int { 1 }
 }

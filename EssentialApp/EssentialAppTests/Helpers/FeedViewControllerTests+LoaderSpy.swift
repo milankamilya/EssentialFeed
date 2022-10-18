@@ -19,6 +19,8 @@ class LoaderSpy: FeedImageDataLoader {
     var loadFeedCallCount: Int {
         return feedRequests.count
     }
+    
+    private(set) var loadMoreCallCount = 0
  
     func loadPublisher() -> AnyPublisher<Paginated<FeedImage>, Error> {
         let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
@@ -27,7 +29,9 @@ class LoaderSpy: FeedImageDataLoader {
     }
     
     func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
-        feedRequests[index].send(Paginated(items: images))
+        feedRequests[index].send(Paginated(items: images, loadMore: { [weak self] _ in
+            self?.loadMoreCallCount += 1
+        }))
     }
     
     func completeFeedLoadingWithError(at index: Int) {
