@@ -30,11 +30,24 @@ extension ListViewController {
     var errorMessage: String? {
         return errorView.message
     }
+    
+    func numberOfRows(in section: Int) -> Int {
+        tableView.numberOfSections > section ? tableView.numberOfRows(inSection: section) : 0
+    }
+    
+    func cell(row: Int, section: Int) -> UITableViewCell? {
+        guard numberOfRows(in: section) > row else {
+            return nil
+        }
+        let ds = tableView.dataSource
+        let index = IndexPath(row: row, section: section)
+        return ds?.tableView(tableView, cellForRowAt: index)
+    }
 }
 
 extension ListViewController {
     func numberOfRenderedImageCommentsView() -> Int {
-        tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: commentsSection)
+        numberOfRows(in: commentsSection)
     }
         
     func commentMessage(at index: Int) -> String? {
@@ -50,12 +63,7 @@ extension ListViewController {
     }
     
     func commentView(at row: Int) -> ImageCommentCell? {
-        if numberOfRenderedImageCommentsView() == 0 {
-            return nil
-        }
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: commentsSection)
-        return ds?.tableView(tableView, cellForRowAt: index) as? ImageCommentCell
+        cell(row: row, section: commentsSection) as? ImageCommentCell
     }
     
     private var commentsSection: Int {
@@ -110,12 +118,7 @@ extension ListViewController {
     }
     
     func feedImageView(at row: Int) -> UITableViewCell? {
-        if numberOfRenderedFeedImageView() == 0 {
-            return nil
-        }
-        let ds = tableView.dataSource
-        let index = IndexPath(row: row, section: feedImagesSection)
-        return ds?.tableView(tableView, cellForRowAt: index)
+        cell(row: row, section: feedImagesSection) as? FeedImageCell
     }
     
     private var feedImagesSection: Int {
