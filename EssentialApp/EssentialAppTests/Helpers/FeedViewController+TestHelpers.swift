@@ -119,6 +119,14 @@ extension ListViewController {
         let indexPath = IndexPath(row: 0, section: feedLoadMoreSection)
         delegate?.tableView?(tableView, willDisplay: cell, forRowAt: indexPath)
     }
+    
+    var isShowingLoadMoreLoadingIndicator: Bool {
+        return loadMoreFeedCell()?.isLoading == true
+    }
+    
+    func loadMoreFeedCell() -> LoadMoreCell? {
+        cell(row: 0, section: feedLoadMoreSection) as? LoadMoreCell
+    }
 
     func numberOfRenderedFeedImageView() -> Int {
         tableView.numberOfSections == 0 ? 0 : tableView.numberOfRows(inSection: feedImagesSection)
