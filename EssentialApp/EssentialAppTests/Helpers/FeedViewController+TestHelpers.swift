@@ -79,7 +79,7 @@ extension ListViewController {
     }
     
     func renderedFeedImageData(at index: Int) -> Data? {
-        return simulateFeedImageViewVisible(at: 0)?.renderedImage
+        return simulateFeedImageViewVisible(at: index)?.renderedImage
     }
     
     @discardableResult
