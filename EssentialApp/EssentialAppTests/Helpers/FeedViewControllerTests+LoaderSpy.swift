@@ -7,27 +7,36 @@
 
 import Foundation
 import Combine
-@testable import EssentialFeediOS
-@testable import EssentialFeed
+import EssentialFeediOS
+import EssentialFeed
 
 class LoaderSpy: FeedImageDataLoader {
     
     // MARK: - FeedLoader
     
-    private var feedRequests = [PassthroughSubject<[FeedImage], Error>]()
-    
+    private var feedRequests = [PassthroughSubject<Paginated<FeedImage>, Error>]()
+    private var loadMoreRequests = [PassthroughSubject<Paginated<FeedImage>, Error>]()
+
     var loadFeedCallCount: Int {
         return feedRequests.count
     }
+    
+    var loadMoreCallCount: Int {
+        return loadMoreRequests.count
+    }
  
-    func loadPublisher() -> AnyPublisher<[FeedImage], Error> {
-        let publisher = PassthroughSubject<[FeedImage], Error>()
+    func loadPublisher() -> AnyPublisher<Paginated<FeedImage>, Error> {
+        let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
         feedRequests.append(publisher)
         return publisher.eraseToAnyPublisher()
     }
     
     func completeFeedLoading(with images: [FeedImage] = [], at index: Int = 0) {
-        feedRequests[index].send(images)
+        feedRequests[index].send(Paginated(items: images, loadMorePublisher: { [weak self] in
+            let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
+            self?.loadMoreRequests.append(publisher)
+            return publisher.eraseToAnyPublisher()
+        }))
     }
     
     func completeFeedLoadingWithError(at index: Int) {
@@ -35,6 +44,20 @@ class LoaderSpy: FeedImageDataLoader {
         feedRequests[index].send(completion: .failure(error))
     }
 
+    func completeLoadMore(with images: [FeedImage] = [], lastPage: Bool = false, at index: Int = 0) {
+        loadMoreRequests[index].send(Paginated(
+            items: images,
+            loadMorePublisher: lastPage ? nil : { [weak self] in
+                let publisher = PassthroughSubject<Paginated<FeedImage>, Error>()
+                self?.loadMoreRequests.append(publisher)
+                return publisher.eraseToAnyPublisher()
+            }))
+    }
+    
+    func completeLoadMoreWithError(at index: Int) {
+        let error = NSError(domain: "an error", code: 0)
+        loadMoreRequests[index].send(completion: .failure(error))
+    }
     // MARK: - FeedImageDataLoader
     
     private struct TaskSpy: FeedImageDataLoaderTask {
